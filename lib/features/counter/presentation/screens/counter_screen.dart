@@ -11,27 +11,29 @@ class CounterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String env = Dependencies.of(context).appConfig.host;
-    return BlocProvider(
-      create: (context) => Dependencies.of(context).counterBloc,
-      child: Scaffold(
-        appBar: AppBar(title: const Text('Counter')),
-        body: const Center(child: CounterBody()),
-        floatingActionButton: Wrap(children: [
-          FloatingActionButton(
-            onPressed: () => Dependencies.of(context)
-                .counterBloc
-                .add(const IncrementEvent(1)),
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(width: 8),
-          FloatingActionButton(
-            onPressed: () {
-              if (kDebugMode) print(env);
-            },
-            child: const Icon(Icons.add),
-          ),
-        ]),
-      ),
+    return Scaffold(
+      appBar: AppBar(title: const Text('Counter')),
+      body: const Center(child: CounterBody()),
+      floatingActionButton: Wrap(children: [
+        BlocBuilder<CounterBloc, CounterState>(
+          bloc: Dependencies.of(context).counterBloc,
+          builder: (context, state) {
+            return FloatingActionButton(
+              onPressed: () => Dependencies.of(context)
+                  .counterBloc
+                  .add(const IncrementEvent(1)),
+              child: const Icon(Icons.add),
+            );
+          },
+        ),
+        const SizedBox(width: 8),
+        FloatingActionButton(
+          onPressed: () {
+            if (kDebugMode) print(env);
+          },
+          child: const Icon(Icons.print_outlined),
+        ),
+      ]),
     );
   }
 }

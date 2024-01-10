@@ -1,3 +1,4 @@
+import 'package:demo_ioc_container/app/ioc_container.dart';
 import 'package:demo_ioc_container/features/counter/presentation/bloc/counter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ class CounterBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CounterBloc, CounterState>(
+      bloc: Dependencies.of(context).counterBloc,
       builder: (context, state) {
         if (state is CounterInitial) {
           return const Text('Try to tap on "+" button');
