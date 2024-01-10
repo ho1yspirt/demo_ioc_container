@@ -7,23 +7,24 @@ abstract interface class ICounterDataSource {
 
 //? Yes, instance of prefs is not inited once :(
 class CounterDataSource implements ICounterDataSource {
-  static const String _counterKey = 'counter';
-  SharedPreferences? _prefs;
+  const CounterDataSource(this.sharedPreferences);
+  final SharedPreferences sharedPreferences;
 
-  Future<SharedPreferences> get _preferences async {
-    _prefs ??= await SharedPreferences.getInstance();
-    return _prefs!;
-  }
+  static const String _counterKey = 'counter';
+  // SharedPreferences? _prefs;
+
+  // Future<SharedPreferences> get _preferences async {
+  //   _prefs ??= await SharedPreferences.getInstance();
+  //   return _prefs!;
+  // }
 
   @override
   Future<int> getCounterValue() async {
-    final prefs = await _preferences;
-    return prefs.getInt(_counterKey) ?? 0;
+    return sharedPreferences.getInt(_counterKey) ?? 0;
   }
 
   @override
   Future<void> setCounterValue(int value) async {
-    final prefs = await _preferences;
-    await prefs.setInt(_counterKey, value);
+    await sharedPreferences.setInt(_counterKey, value);
   }
 }
