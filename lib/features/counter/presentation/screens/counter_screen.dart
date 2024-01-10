@@ -10,16 +10,17 @@ class CounterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = Dependencies.of(context).counterBloc;
     final String env = Dependencies.of(context).appConfig.host;
     return BlocProvider(
-      create: (context) => bloc,
+      create: (context) => Dependencies.of(context).counterBloc,
       child: Scaffold(
         appBar: AppBar(title: const Text('Counter')),
         body: const Center(child: CounterBody()),
         floatingActionButton: Wrap(children: [
           FloatingActionButton(
-            onPressed: () => bloc.add(const IncrementEvent(1)),
+            onPressed: () => Dependencies.of(context)
+                .counterBloc
+                .add(const IncrementEvent(1)),
             child: const Icon(Icons.add),
           ),
           const SizedBox(width: 8),
