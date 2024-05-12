@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:demo_ioc_container/app/app_runner.dart';
-import 'package:demo_ioc_container/core/utils/logger.dart';
+import 'src/app/data/app_runner.dart';
+import 'src/core/utils/logger.dart';
 
 //! Too lazy to write tests
 void main() {

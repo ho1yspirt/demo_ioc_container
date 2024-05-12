@@ -1,0 +1,1 @@
+Imo use cases are usually useless in flutter world, but in case there is an example here
