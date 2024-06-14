@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:demo_ioc_container/src/core/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,14 +31,18 @@ final class AppRunner implements IAppRunner {
 
   @override
   Future<void> run() async {
-    await preloadData().then(
-      (dependencies) => runApp(
-        InheritedDependencies(
-          dependencies: dependencies,
-          child: const App(),
+    try {
+      preloadData().then(
+        (dependencies) => runApp(
+          InheritedDependencies(
+            dependencies: dependencies,
+            child: const App(),
+          ),
         ),
-      ),
-      onError: (Object? e) => runApp(AppError(e: e)),
-    );
+      );
+    } catch (error, stackTrace) {
+      logger.e('$runtimeType', error: error, stackTrace: stackTrace);
+      runApp(AppError(e: error));
+    }
   }
 }
